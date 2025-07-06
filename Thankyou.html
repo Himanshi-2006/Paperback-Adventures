@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Confirmed - Paperback Adventures</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      padding: 10px;
+    }
+    .confirmation-box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+    h1 {
+      color: #27ae60;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.1rem;
+      margin: 10px 0;
+    }
+    button {
+      background-color: #e47627;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #c9641f;
+    }
+
+    @media (max-width: 500px) {
+      .confirmation-box {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="confirmation-box">
+    <h1>Thank You for Your Order!</h1>
+    <p>Your books are on their way.</p>
+    <p><strong>Order Total:</strong> $<span id="orderTotal">0.00</span></p>
+    <button onclick="window.location.href='index.html'">Continue Shopping</button>
+  </div>
+
+  <script>
+    const total = localStorage.getItem('lastOrderTotal');
+    document.getElementById('orderTotal').textContent = parseFloat(total || 0).toFixed(2);
+  </script>
+</body>
+</html>

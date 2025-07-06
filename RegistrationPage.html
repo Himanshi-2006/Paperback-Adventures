@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up - Paperback Adventures</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 10px;
+    }
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #e47627;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #c9641f;
+    }
+    .login-link {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 20px;
+      }
+      input, button {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Create Account</h2>
+    <form id="registrationForm">
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email Address" required />
+      <input type="password" placeholder="Password" required />
+      <input type="password" placeholder="Confirm Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+    <div class="login-link">
+      Already have an account? <a href="LoginPage.html">Log in</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = form.elements[0].value.trim();
+      const email = form.elements[1].value.trim();
+      const password = form.elements[2].value;
+      const confirmPassword = form.elements[3].value;
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      if (users.find(u => u.email === email)) {
+        alert('Email already registered!');
+        return;
+      }
+
+      users.push({ name, email, password });
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('Account created successfully!');
+      window.location.href = 'LoginPage.html';
+    });
+  </script>
+</body>
+</html>

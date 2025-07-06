@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Orders - Paperback Adventures</title>
+  <link rel="stylesheet" href="BookStore.css" />
+  <style>
+    .orders-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .orders-container h2 {
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 1.8rem;
+    }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding: 15px 0;
+      gap: 20px;
+    }
+
+    .order-item img {
+      width: 80px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .order-details {
+      flex: 1;
+    }
+
+    .order-title {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .order-meta {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .no-orders {
+      text-align: center;
+      color: #777;
+      font-size: 1.1rem;
+      padding: 40px 0;
+    }
+
+    .nav-buttons {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .nav-buttons button {
+      padding: 10px 20px;
+      background-color: #37475a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .nav-buttons button:hover {
+      background-color: #2a3441;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Simple Navbar -->
+  <header>
+    <div class="navbar">
+      <div class="nav-logo border">PAPERBACK ADVENTURES</div>
+      <div class="nav-cart border">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <a href="CartPage.html">Cart</a>
+      </div>
+      <div class="nav-logout border" id="logoutBtn" style="cursor:pointer;">
+        <span>Logout</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="orders-container">
+    <h2>Your Orders</h2>
+    <div id="ordersList" class="order-list"></div>
+
+    <div class="nav-buttons">
+      <button onclick="window.location.href='index.html'">Back to Store</button>
+    </div>
+  </main>
+
+  <script>
+    const ordersList = document.getElementById("ordersList");
+    const storedOrders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+
+    if (storedOrders.length === 0) {
+      ordersList.innerHTML = '<div class="no-orders">You haven\'t placed any orders yet.</div>';
+    } else {
+      storedOrders.forEach(order => {
+        const item = document.createElement("div");
+        item.className = "order-item";
+        item.innerHTML = `
+          <img src="${order.image}" alt="${order.title}" />
+          <div class="order-details">
+            <div class="order-title">${order.title}</div>
+            <div class="order-meta">Quantity: ${order.quantity}</div>
+            <div class="order-meta">Price: ₹${(order.price * order.quantity).toFixed(2)}</div>
+          </div>
+        `;
+        ordersList.appendChild(item);
+      });
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("loggedInUser");
+      alert("Logged out!");
+      window.location.href = "LoginPage.html";
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart - Paperback Adventures</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .cart-item img {
+      width: 100px;
+      height: auto;
+      margin-right: 20px;
+    }
+    .cart-info {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .cart-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .quantity-control button {
+      padding: 4px 8px;
+      background-color: #ccc;
+      color: black;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .price {
+      color: green;
+    }
+    .item-total {
+      font-weight: bold;
+    }
+    .empty {
+      text-align: center;
+      font-size: 1.2rem;
+    }
+    button {
+      padding: 6px 10px;
+      background-color: #e47627;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 5px;
+    }
+    #cartTotal {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .cart-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .cart-item img {
+        width: 80px;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Shopping Cart</h1>
+  <div id="cartContainer"></div>
+  <div id="cartTotal"></div>
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="clearCart">Clear Cart</button>
+    <a href="CheckoutPage.html"><button>Proceed to Checkout</button></a>
+  </div>
+
+  <script>
+    const cartContainer = document.getElementById('cartContainer');
+    const cartTotal = document.getElementById('cartTotal');
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    function renderCart() {
+      cartContainer.innerHTML = '';
+      cartTotal.textContent = '';
+
+      if (cartItems.length === 0) {
+        cartContainer.innerHTML = '<p class="empty">Your cart is empty.</p>';
+        return;
+      }
+
+      let total = 0;
+      cartItems.forEach((item, index) => {
+        const itemTotal = item.quantity * item.price;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <div class="cart-info">
+            <img src="${item.image}" alt="${item.title}">
+            <span class="cart-title">${item.title}</span>
+            <div class="quantity-control">
+              <button class="decreaseQty" data-index="${index}">-</button>
+              <span class="quantity">${item.quantity}</span>
+              <button class="increaseQty" data-index="${index}">+</button>
+            </div>
+            <span class="price">$${item.price.toFixed(2)}</span>
+            <span class="item-total">= $${itemTotal.toFixed(2)}</span>
+          </div>
+          <button class="removeBtn" data-index="${index}">Remove</button>
+        `;
+        cartContainer.appendChild(div);
+        total += itemTotal;
+      });
+
+      cartTotal.textContent = 'Total: $' + total.toFixed(2);
+
+      document.querySelectorAll('.removeBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = btn.getAttribute('data-index');
+          cartItems.splice(index, 1);
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          localStorage.setItem('cartCount', cartItems.reduce((sum, item) => sum + item.quantity, 0));
+          renderCart();
+        });
+      });
+
+      document.querySelectorAll('.increaseQty').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = btn.getAttribute('data-index');
+          cartItems[index].quantity += 1;
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          localStorage.setItem('cartCount', cartItems.reduce((sum, item) => sum + item.quantity, 0));
+          renderCart();
+        });
+      });
+
+      document.querySelectorAll('.decreaseQty').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = btn.getAttribute('data-index');
+          if (cartItems[index].quantity > 1) {
+            cartItems[index].quantity -= 1;
+          } else {
+            cartItems.splice(index, 1);
+          }
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          localStorage.setItem('cartCount', cartItems.reduce((sum, item) => sum + item.quantity, 0));
+          renderCart();
+        });
+      });
+    }
+
+    document.getElementById('clearCart').addEventListener('click', () => {
+      localStorage.removeItem('cartItems');
+      localStorage.setItem('cartCount', 0);
+      cartItems = [];
+      renderCart();
+    });
+
+    renderCart();
+
+    if (localStorage.getItem('userLoggedIn') !== 'true') {
+      alert('You must be logged in to view this page.');
+      window.location.href = 'LoginPage.html';
+    }
+  </script>
+</body>
+</html>

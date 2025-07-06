@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout - Paperback Adventures</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background: #f5f5f5;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+    }
+    .summary {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+    }
+    .summary p {
+      margin: 10px 0;
+    }
+    button {
+      background: #e47627;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .empty {
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .summary {
+        width: 95%;
+        padding: 15px;
+      }
+      button {
+        width: 100%;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Order Summary</h1>
+  <div class="summary" id="orderSummary"></div>
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="confirmOrder">Confirm Order</button>
+  </div>
+
+  <script>
+    const orderSummary = document.getElementById('orderSummary');
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    let total = 0;
+
+    if (cartItems.length === 0) {
+      orderSummary.innerHTML = '<p class="empty">Your cart is empty. Go add some books!</p>';
+    } else {
+      cartItems.forEach(item => {
+        const price = item.price || 0;
+        const itemTotal = item.quantity * price;
+        orderSummary.innerHTML += `
+          <p>${item.title} x${item.quantity} @ $${price.toFixed(2)} = $${itemTotal.toFixed(2)}</p>
+        `;
+        total += itemTotal;
+      });
+      orderSummary.innerHTML += `<hr><p><strong>Total: $${total.toFixed(2)}</strong></p>`;
+    }
+
+    document.getElementById('confirmOrder').addEventListener('click', () => {
+      if (cartItems.length === 0) {
+        alert('Your cart is empty!');
+      } else {
+        alert('Thank you! Your order has been placed.');
+        localStorage.setItem('lastOrderTotal', total.toFixed(2));
+        localStorage.removeItem('cartItems');
+        localStorage.setItem('cartCount', 0);
+        window.location.href = 'Thankyou.html';
+      }
+    });
+
+    if (localStorage.getItem('userLoggedIn') !== 'true') {
+      alert('You must be logged in to view this page.');
+      window.location.href = 'LoginPage.html';
+    }
+  </script>
+</body>
+</html>

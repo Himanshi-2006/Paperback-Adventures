@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Account - Paperback Adventures</title>
+  <link rel="stylesheet" href="BookStore.css" />
+  <style>
+    .account-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .account-container h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    .account-info {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      font-size: 1rem;
+    }
+
+    .account-info span {
+      font-weight: bold;
+    }
+
+    .account-buttons {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .account-buttons button {
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      border: none;
+      background-color: #37475a;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .account-buttons button:hover {
+      background-color: #2a3441;
+    }
+
+    @media(max-width: 600px) {
+      .account-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR can be reused here if needed -->
+  <header>
+    <div class="navbar">
+      <div class="nav-logo border">PAPERBACK ADVENTURES</div>
+      <div class="nav-cart border">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <a href="CartPage.html">Cart</a>
+      </div>
+      <div class="nav-logout border" id="logoutBtn" style="cursor:pointer;">
+        <span>Logout</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="account-container">
+    <h2>Welcome to Your Account</h2>
+    <div class="account-info" id="accountInfo">
+      <p><span>Name:</span> Loading...</p>
+      <p><span>Email:</span> Loading...</p>
+    </div>
+
+    <div class="account-buttons">
+      <button onclick="window.location.href='YourOrders.html'">Your Orders</button>
+      <button onclick="window.location.href='index.html'">Continue Shopping</button>
+    </div>
+  </main>
+
+  <script>
+    const infoDiv = document.getElementById("accountInfo");
+    const userData = localStorage.getItem("loggedInUser");
+
+    try {
+      const user = JSON.parse(userData);
+      if (user && user.name && user.email) {
+        infoDiv.innerHTML = `
+          <p><span>Name:</span> ${user.name}</p>
+          <p><span>Email:</span> ${user.email}</p>
+        `;
+      } else {
+        infoDiv.innerHTML = "<p>User data not found.</p>";
+      }
+    } catch {
+      infoDiv.innerHTML = "<p>Invalid user session.</p>";
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("loggedInUser");
+      alert("You have been logged out.");
+      window.location.href = "LoginPage.html";
+    });
+  </script>
+
+</body>
+</html>

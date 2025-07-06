@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - Paperback Adventures</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 10px;
+    }
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #e47627;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #c9641f;
+    }
+    .signup-link {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 20px;
+      }
+      input, button {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Sign In</h2>
+    <form id="loginForm">
+      <input type="email" placeholder="Email Address" id="email" required />
+      <input type="password" placeholder="Password" id="password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div class="signup-link">
+      Don't have an account? <a href="RegistrationPage.html">Sign up</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const user = users.find(u => u.email === email && u.password === password);
+
+      if (user) {
+        localStorage.setItem('userLoggedIn', 'true');
+        localStorage.setItem('loggedInUser', JSON.stringify(user));
+        alert('Login successful!');
+        window.location.href = 'index.html';
+      } else {
+        alert('Invalid email or password!');
+      }
+    });
+  </script>
+</body>
+</html>

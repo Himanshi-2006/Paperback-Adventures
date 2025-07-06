@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paperback Adventures</title>
+
+  <!-- Icons & main stylesheet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="BookStore.css" />
+ 
+  <!-- Tiny in‑file key‑frame used by JS -->
+  <style> 
+    .bounce{animation:bounce 0.5s}
+    @keyframes bounce{0%{transform:scale(1)}50%{transform:scale(1.25)}100%{transform:scale(1)}}
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <header>
+    <div class="navbar">
+      <div class="nav-logo border">PAPERBACK ADVENTURES</div>
+
+      <div class="nav-address border">
+        <p class="add-1">Deliver to</p>
+        <div class="add-icon">
+          <i class="fa-solid fa-location-dot"></i>
+          <p class="add-2">India</p>
+        </div>
+      </div>
+
+      <div class="nav-search">
+        <select class="search-select">
+          <option>All</option>
+        </select>
+        <input id="searchInput" placeholder="Search book" class="search-input" />
+        <div class="search-icon" id="searchButton">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+      </div>
+
+      <div class="nav-signin border" id="accountMenu">
+        <div>
+          <span id="userGreeting">Hello, Guest</span>
+          <p class="nav-2">Account&nbsp;&amp;&nbsp;Lists</p>
+        </div>
+        <div class="dropdown-content">
+          <a href="LoginPage.html" id="signInLink">Sign In</a>
+        </div>
+      </div>
+
+      <div class="nav-return border">
+        <span>Returns</span>
+        <p class="nav-2">&nbsp;Orders</p>
+      </div>
+
+      <div class="nav-cart border">
+        <a href ="CartPage.html">
+          <i class="fa-solid fa-cart-shopping" id="cartIcon"></i>
+        </a>
+        <a href="CartPage.html">Cart&nbsp;(<span id="cartCount">0</span>)</a>
+      </div>
+
+      <div class="nav-logout border" id="logoutBtn" style="cursor:pointer;">
+        <span>Logout</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-all" id="menu-toggle">
+        <i class="fa-solid fa-bars"></i> 
+        Menu</div>
+      <div class="panel-ops" id="menu-items">
+        <p>Today's Deals</p>
+        <p>Customer Service</p>
+        <p>Registry</p>
+        <p>Gift&nbsp;Cards</p>
+        <p>Sell</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <div class="hero-section">
+    <div class="hero-message">
+      <p>“So please, oh please, we beg, we pray, go throw your TV set away, and in its place you can install a lovely bookshelf on the wall.”</p>
+    </div>
+  </div>
+
+  <!-- ========== BOOK GRID (populated by JS) ========== -->
+  <div class="content" id="bookContainer"></div>
+
+  <!-- ========== PAGINATION BAR ========== -->
+  <div class="pagination">
+    <button id="prevBtn" class="page-btn" disabled>&laquo; Prev</button>
+    <span id="pageInfo"></span>
+    <button id="nextBtn" class="page-btn">Next&nbsp;&raquo;</button>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <div class="foot-pannel-1" id="backToTop">Back&nbsp;to&nbsp;Top</div>
+
+    <div class="foot-pannel-2">
+      <ul>
+        <p>Get to Know Us</p>
+        <a>Careers</a>
+        <a>Blog</a>
+        <a>About&nbsp;Us</a>
+        <a>Investor&nbsp;Relation</a>
+        <a>Devices</a>
+        <a>Sciences</a>
+      </ul>
+      <ul>
+        <p>Make Money with Us</p>
+        <a>Sell products</a>
+        <a>Affiliate&nbsp;Program</a>
+        <a>Advertise</a>
+      </ul>
+    </div>
+
+    <div class="foot-pannel-3">
+      <div class="logo">PAPERBACK&nbsp;ADVENTURES</div>
+    </div>
+
+    <div class="foot-pannel-4">
+      <div class="pages">
+        <a>Conditions&nbsp;of&nbsp;Use</a>
+        &nbsp;|&nbsp;
+        <a>Privacy&nbsp;Notice</a>
+        &nbsp;|&nbsp;
+        <a>Your&nbsp;Ads&nbsp;Privacy&nbsp;Choices</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="BookstoreScript.js"></script>
+</body>
+</html>
