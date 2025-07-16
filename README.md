@@ -77,7 +77,7 @@ To run the project locally:
 
 1. Clone this repository
 2. Extract and open the folder
-3. Launch `BookStore.html` in your browser
+3. Launch `index.html` in your browser
 4. Register, log in, and explore!
 
 > ⚠️ No backend or database is used. All data is stored in the browser using `localStorage`.
