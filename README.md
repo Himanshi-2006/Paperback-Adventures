@@ -75,7 +75,7 @@
 
 To run the project locally:
 
-1. Clone this repository or [Download ZIP](https://github.com/your-username/your-repo-name/archive/refs/heads/main.zip)
+1. Clone this repository
 2. Extract and open the folder
 3. Launch `BookStore.html` in your browser
 4. Register, log in, and explore!
